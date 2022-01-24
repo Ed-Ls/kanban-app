@@ -19,7 +19,6 @@ Déssinez le MCD en utilisant l'outils de votre choix : un papier et un crayon, 
 
 N'hésitez pas à faire un tour sur la [fiche recap du MCD](https://kourou.oclock.io/ressources/fiche-recap/mcd-modele-conceptuel-de-donnees/).
 
-
 ## Étape 2 : User Stories
 
 En tant que _client_, je veux _un document_ dans le but de _comprendre les fonctionnalités de mon application_.

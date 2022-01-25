@@ -1,7 +1,7 @@
 # MCD
 
-LIST: code_list, name,
-CONTAINS, 11 CARD, 0N LIST
+LIST: code_list, title, position
+CONTAINS, 0N LIST, 11 CARD
 CARD: code_card, title, color, position
-INCLUDES, 0N LABEL, 0N CARD
-LABEL: name, color
+INCLUDES, 0N CARD, 0N LABEL
+LABEL: code_label, title, color

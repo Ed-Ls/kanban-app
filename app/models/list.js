@@ -1,17 +1,14 @@
-const Sequelize = require("sequelize");
-const sequelizeConnection = require("../sequelize");
+const { Model, DataTypes } = require('sequelize');
+const sequelizeInstance = require('../database');
 
-class List extends Sequelize.Model {}
+class List extends Model {};
 
-List.init(
-    {
-        title: Sequelize.STRING,
-        position: Sequelize.INTEGER,
-    },
-    {
-        sequelize: sequelizeConnection,
-        tableName: 'list',
-    }
-);
+List.init({
+    title: DataTypes.TEXT,
+    position: DataTypes.SMALLINT,
+}, {
+    sequelize: sequelizeInstance,
+    tableName: 'list',
+});
 
 module.exports = List;

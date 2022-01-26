@@ -1,23 +1,19 @@
-// on va charger nos variables d'environnement
 require('dotenv').config();
 
-// ici on require app/models
-// comme c'est un dossier, cela revient a
-// require app/models/index
-const { Card, List, Label } = require('./app/models');
+const models = require('./app/models');
 
-async function test() {
-    // essayons de récupérer un Quiz...
-    // et tant qu'a faire je voudrais TOUT
-    // son user, ses questions, ses tags
-    const premiereListe = await List.findByPk(1, {
-        include: [
-            'cards',
-        ]
-    });
+const doSomeTests = async () => {
+    try {
+        // const lists = await models.List.findAll();
+        // console.log(lists);
+        const cards = await models.Card.findAll({
+            include: ['list', 'labels'],
+        });
+        console.log(cards);
+    }
+    catch (error) {
+        console.trace(error);
+    }
+};
 
-    console.log(premiereListe);
-    console.log(premiereListe.cards)
-}
-
-test();
+doSomeTests();

@@ -1,33 +1,36 @@
+const List = require('./list');
 const Card = require('./card');
 const Label = require('./label');
-const List = require('./list');
 
-// une card est liée a une seule liste
+// https://sequelize.org/v5/manual/associations.html
 Card.belongsTo(List, {
-    foreignKey: 'list_id',
     as: 'list',
-});
-
-// une list possède plusieurs cards
-List.hasMany(Card, {
     foreignKey: 'list_id',
-    as: 'cards'
 });
 
-//Une card possède plusieurs labels
+List.hasMany(Card, {
+    as: 'cards',
+    foreignKey: 'list_id',
+});
+
 Card.belongsToMany(Label, {
     as: 'labels',
     through: 'card_has_label',
     foreignKey: 'card_id',
-    otherKey: 'label_id'
+    otherKey: 'label_id',
+    updatedAt: false,
 });
 
-// un label possède plusieurs cards
 Label.belongsToMany(Card, {
-    as: 'cardList',
+    as: 'cards',
     through: 'card_has_label',
     foreignKey: 'label_id',
-    otherKey: 'card_id'
+    otherKey: 'card_id',
+    updatedAt: false,
 });
 
-module.exports = { Card, Label, List };
+module.exports = {
+    Card: Card,
+    List: List,
+    Label: Label,
+};

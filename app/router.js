@@ -18,6 +18,7 @@ router.get('/cards', cardController.getAllCards);
 
 router.get('/cards/:id', cardController.getOneCard);
 
+router.post('/cards/create', cardController.addCard);
 
 
 module.exports = router;

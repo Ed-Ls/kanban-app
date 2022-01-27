@@ -12,11 +12,11 @@ Pour chacune des tâches suivantes, créer un nouveau controller.
 
 Mettre en place les routes suivantes :
 
-- **GET `/lists/:id/cards` : renvoie toutes les cartes d'une liste. Chaque carte doit porter les tags qui lui sont associés.**
-- GET `/cards/:id` : renvoie les détails de la carte demandée, avec les tags qui lui sont associés.
-- POST `/cards` : crée une nouvelle carte (attention à bien valider les paramètres)
-- PATCH `/cards/:id` : modifie une carte (ou 404)
-- DELETE `/cards/:id` : supprimer ou carte (ou 404)
+- **GET `/lists/:id/cards` : renvoie toutes les cartes d'une liste. Chaque carte doit porter les tags qui lui sont associés.** ✅
+- GET `/cards/:id` : renvoie les détails de la carte demandée, avec les tags qui lui sont associés. ✅
+- POST `/cards` : crée une nouvelle carte (attention à bien valider les paramètres) ✅
+- PATCH `/cards/:id` : modifie une carte (ou 404) ✅
+- DELETE `/cards/:id` : supprimer ou carte (ou 404) ✅
 
 ### Tags
 

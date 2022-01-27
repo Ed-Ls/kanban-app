@@ -109,6 +109,22 @@ const listController = {
       });
       }
     },
+
+    async getCardsOfList(req, res) {
+      try {
+        const list = await List.findByPk(+req.params.id, {
+          include: [
+            { association: 'cards', include: ['labels']},
+          ]
+        });
+  
+        res.status(200).json(list.cards);
+
+      } catch (err) {
+        console.trace(err);
+        res.status(500).send(err);
+      }
+    },
 }
 
 module.exports = listController;

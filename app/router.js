@@ -9,18 +9,24 @@ router.get('/lists', listController.getAllLists);
 
 router.get('/lists/:id', listController.getOneList);
 
-router.post('/lists/create', listController.addList);
+router.get('/lists/:id/cards', listController.getCardsOfList);
 
-router.put('/lists/:id/update', listController.updateOneList);
+router.post('/lists', listController.addList);
 
-router.delete('/lists/delete/:id', listController.deleteOneList);
+router.put('/lists/:id', listController.updateOneList);
+
+router.delete('/lists/:id', listController.deleteOneList);
 
 //Cards
 router.get('/cards', cardController.getAllCards);
 
 router.get('/cards/:id', cardController.getOneCard);
 
-router.post('/cards/create', cardController.addCard);
+router.post('/cards', cardController.addCard);
+
+router.put('/cards/:id', cardController.updateOneCard);
+
+router.delete('/cards/:id', cardController.deleteOneCard);
 
 
 module.exports = router;

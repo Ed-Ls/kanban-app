@@ -13,7 +13,10 @@ const cardController = {
         res.status(200).json(allCards);
     } catch (err) {
         console.trace(err);
-        res.status(500).send(err);
+        
+        res.status(500).json({
+          message: 'Erreur lors de la création de la liste',
+      });
       }
     },
 
@@ -30,25 +33,29 @@ const cardController = {
 
         } catch (err) {
           console.trace(err);
-          res.status(500).send(err);
+
+          res.status(500).json({
+          message: 'Erreur lors de la création de la liste',
+        });
         }
       },
 
       async addCard(req, res) {
         try {
-            let newCard = new Card({
+            let newCard = await Card.create({
                 title: req.body.title,
                 position: +req.body.position,
                 list_id: +req.body.list
             });
     
-            await newCard.save();
-    
-            res.status(200).send('New card added');
+            res.status(200).json(newCard);
 
         } catch (err) {
           console.trace(err);
-          res.status(500).send(err);
+
+          res.status(500).json({
+          message: 'Erreur lors de la création de la liste',
+        });
         }
       },
     }

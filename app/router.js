@@ -11,6 +11,8 @@ router.get('/lists/:id', listController.getOneList);
 
 router.post('/lists/create', listController.addList);
 
+router.put('/lists/:id/update', listController.updateOneList);
+
 router.delete('/lists/delete/:id', listController.deleteOneList);
 
 //Cards

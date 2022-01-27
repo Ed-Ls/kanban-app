@@ -1,4 +1,5 @@
 const { Card } = require('../models');
+const { index } = require('../models');
 
 const cardController = {
     async getAllCards(req, res) {
@@ -55,7 +56,7 @@ const cardController = {
           console.trace(err);
 
           res.status(500).json({
-          message: 'Erreur lors de la création de la liste',
+          message: 'Erreur lors de la création de la carte',
         });
         }
       },
@@ -98,6 +99,37 @@ const cardController = {
         });
         }
       },
+
+      async addLabelToCard(req, res) {
+        try {
+          const card = await Card.findByPk(+req.params.id, {
+            include: [
+                'labels',
+                'list'
+            ]
+          });
+
+          // console.log(await card.getLabel())
+
+          // card.create({ label_id: +req.body.label });
+
+          // const label = await Label.findByPk(+req.body.label);
+
+          // card.createLabel({ label_id: +req.body.label });
+
+          res.status(200).json(card);
+
+
+        } catch (err) {
+          console.trace(err);
+
+          res.status(500).json({
+          message: 'Erreur lors de la récupération de la carte',
+        });
+        }
+      },
+      
     }
+
 
 module.exports = cardController;

@@ -1,12 +1,19 @@
+'use strict';
+
 require('dotenv').config();
 
-// const path = require('path');
 const express = require('express');
+const cors = require('cors');
 const router = require('./app/router');
 
 const port = process.env.PORT || 3000;
 
 const app = express();
+
+// Specifying CORS politics
+app.use(cors({
+   origin: '*', 
+}));
 
 app.use(express.urlencoded({extended: true}));
 app.use(express.json())

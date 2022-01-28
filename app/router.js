@@ -1,46 +1,41 @@
 const express = require('express');
-const listController = require('./controllers/listController');
-const cardController = require('./controllers/cardController');
-const labelController = require('./controllers/labelController');
+const mainController = require('./controllers/main');
+const listController = require('./controllers/list');
+const cardController = require('./controllers/card');
+const labelController = require('./controllers/label');
 
 const router = express.Router();
 
-//Lists 
-router.get('/lists', listController.getAllLists);
+// List
+router.get('/lists', listController.list);
+router.post('/lists', listController.create);
+router.get('/lists/:id', listController.read);
+router.patch('/lists/:id', listController.update);
+router.delete('/lists/:id', listController.delete);
 
-router.get('/lists/:id', listController.getOneList);
+// Card
+router.get('/cards', cardController.list);
+router.post('/cards', cardController.create);
+router.get('/cards/:id', cardController.read);
+router.patch('/cards/:id', cardController.update);
+router.delete('/cards/:id', cardController.delete);
+router.put('/lists/:id?', listController.createOrUpdate);
 
-router.get('/lists/:id/cards', listController.getCardsOfList);
+// Label
+router.get('/labels', labelController.list);
+router.post('/labels', labelController.create);
+router.get('/labels/:id', labelController.read);
+router.patch('/labels/:id', labelController.update);
+router.delete('/labels/:id', labelController.delete);
+router.put('/cards/:id?', cardController.createOrUpdate);
 
-router.post('/lists', listController.addList);
+//added routes
+router.post('/cards/:card_id/label/:label_id', cardController.addLabelToCard);
+router.delete('/cards/:card_id/label/:label_id', cardController.removeLabelFromCard);
+router.get('/lists/:id/cards', listController.readCards);
+router.put('/labels/:id?', labelController.createOrUpdate);
 
-router.put('/lists/:id', listController.updateOneList);
-
-router.delete('/lists/:id', listController.deleteOneList);
-
-//Cards
-router.get('/cards', cardController.getAllCards);
-
-router.get('/cards/:id', cardController.getOneCard);
-
-router.post('/cards', cardController.addCard);
-
-router.put('/cards/:id', cardController.updateOneCard);
-
-router.delete('/cards/:id', cardController.deleteOneCard);
-
-router.post('/cards/:id/label', cardController.addLabelToCard);
-
-//Labels
-router.get('/labels', labelController.getAllLabels);
-
-router.get('/labels/:id', labelController.getOneLabel);
-
-router.post('/labels', labelController.addLabel);
-
-router.put('/labels/:id', labelController.updateOneLabel);
-
-router.delete('/labels/:id', labelController.deleteOneLabel);
-
+// 404
+router.use(mainController.notFound);
 
 module.exports = router;

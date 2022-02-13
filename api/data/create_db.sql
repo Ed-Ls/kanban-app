@@ -62,25 +62,26 @@ CREATE TABLE "card_has_label" (
 
 INSERT INTO "list" ("title", "position") -- on peut lister uniquement les champs qui nous intéresse
     VALUES 
-        ('Liste test', 0),
-        ('A acheter', 1); -- on peut insérer plusieurs lignes d'un coup
+        ('To Buy', 0),
+        ('To Do', 1); 
 
 INSERT INTO "card" ("title", "color", "position", "list_id")
     VALUES
-        ('Un 3ème écran', '#f0f', 0, 2),
-        ('Des lego', 'rgba(255,125,52,0.3)', 1, 2),
-        ('Carte bidon', 'green', 0, 1);
+        ('Un 3ème écran', 'red', 0, 2),
+        ('Des lego', 'blue', 1, 2),
+        ('Voir exposition Pompidou', 'red', 0, 1);
 
 INSERT INTO "label" ("title", "color")
     VALUES
         ('Urgent', 'red'),
-        ('Idée', 'yellow');
+        ('Idée', 'yellow'),
+        ('À surveiller', 'green');
 
 INSERT INTO "card_has_label" ("card_id", "label_id")
     VALUES
         (1, 1),
         (2, 2),
         (3, 1),
-        (3, 2);
+        (3, 3);
 
 COMMIT;

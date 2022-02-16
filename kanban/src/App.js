@@ -75,7 +75,7 @@ function App() {
       element={"list"}
       modal={setShowModal}
       onAddedEl={handleNewEl}
-      numOfEl={kanban.length}
+      numOfLists={kanban.length}
     />
   );
 

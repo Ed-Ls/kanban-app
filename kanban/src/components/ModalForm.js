@@ -1,26 +1,36 @@
 import { useRef } from "react";
 import { XCircleIcon } from "@heroicons/react/outline";
 
-function ModalForm({ element, modal, onAddedEl, numOfEl, listId }) {
+function ModalForm({
+  element,
+  modal,
+  onAddedEl,
+  numOfLists,
+  numOfCards,
+  listId,
+}) {
   const titleRef = useRef("");
 
   const addElementtoDB = async (e) => {
     e.preventDefault();
 
-    const getPosition = numOfEl++;
-
     let elementType = element;
+
+    const getListPosition = numOfLists++;
+    console.log(getListPosition);
+    const getCardPosition = numOfCards++;
+
     let newEl;
 
     elementType === "card"
       ? (newEl = {
           title: titleRef.current.value,
-          position: getPosition,
+          position: getCardPosition,
           list_id: listId,
         })
       : (newEl = {
           title: titleRef.current.value,
-          position: getPosition,
+          position: getListPosition,
         });
 
     const response = await fetch(`http://localhost:5000/${element}s`, {
@@ -36,7 +46,7 @@ function ModalForm({ element, modal, onAddedEl, numOfEl, listId }) {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-1/3 bg-indigo-800 w-5/12 mx-auto rounded fixed top-40 left-0 right-0 rounded-xl shadow-3xl py-10 z-10 ">
+    <div className="flex flex-col items-center justify-center min-h-1/3 bg-indigo-800 w-5/12 mx-auto rounded-xl fixed top-40 left-0 right-0 rounded-xl shadow-3xl py-10 z-10 ">
       <h3 className="text-2xl font-bold text-center text-neutral-100 mb-8 relative">
         Add a new {element}
       </h3>
@@ -51,7 +61,7 @@ function ModalForm({ element, modal, onAddedEl, numOfEl, listId }) {
             Title
           </label>
           <input
-            className="rounded-md"
+            className="rounded-md px-2"
             type="text"
             id="title"
             name="title"

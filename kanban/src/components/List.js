@@ -11,6 +11,7 @@ function List({ title, id, position, cards, onDeleteEl, getData }) {
     <Card
       key={card.id}
       id={card.id}
+      position={card.position}
       title={card.title}
       color={card.color}
       labels={card.labels.map((label) => label)}
@@ -55,6 +56,7 @@ function List({ title, id, position, cards, onDeleteEl, getData }) {
       onAddedEl={handleModal}
       numOfEl={listCards.length}
       listId={listId}
+      numOfCards={listCards.length}
     />
   );
 
@@ -62,7 +64,7 @@ function List({ title, id, position, cards, onDeleteEl, getData }) {
     <Fragment>
       {showModal && modalCard}
       <div
-        className={`basis-1/4 flex-none m-5 bg-indigo-700 rounded-xl p-4 shadow-md overflow-y-auto relative order-${position}`}
+        className={`basis-1/4 flex-none m-5 bg-indigo-700 rounded-xl p-4 shadow-md overflow-y-auto relative order-first`}
       >
         <TrashIcon
           className="cursor-pointer text-rose-600 w-8 absolute top-6 right-6"

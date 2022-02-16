@@ -2,7 +2,7 @@ import React from "react";
 import Label from "./Label";
 import { TrashIcon } from "@heroicons/react/outline";
 
-function Card({ title, id, color, labels, onDeleteEl }) {
+function Card({ title, id, color, labels, onDeleteEl, position }) {
   // console.log(labels);
 
   const listLabels = labels.map((label) => (
@@ -28,10 +28,10 @@ function Card({ title, id, color, labels, onDeleteEl }) {
 
   return (
     <div
-      className={`basis-1/4 m-3 bg-neutral-200 rounded-xl p-2 shadow-md shadow-indigo-400/50 py-6 my-6 relative`}
+      className={`basis-1/4 m-3 bg-neutral-200 rounded-xl p-2 shadow-md shadow-indigo-400/50 py-6 my-6 relative order-${position}`}
     >
       <TrashIcon
-        className="cursor-pointer text-rose-900 w-6 absolute top-6 right-6 z-10"
+        className="cursor-pointer text-rose-900 w-6 absolute top-6 right-6"
         onClick={handleDeleteCard}
         id={id}
       />

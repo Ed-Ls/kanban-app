@@ -1,29 +1,42 @@
 import { useRef } from "react";
 import { XCircleIcon } from "@heroicons/react/outline";
 
-function ModalForm({ element, modal, onAddedEl }) {
+function ModalForm({ element, modal, onAddedEl, numOfEl, listId }) {
   const titleRef = useRef("");
 
   const addElementtoDB = async (e) => {
     e.preventDefault();
 
-    const newEl = {
-      title: titleRef.current.value,
-    };
+    const getPosition = numOfEl++;
 
-    const response = await fetch("http://localhost:5000/lists", {
+    let elementType = element;
+    let newEl;
+
+    elementType === "card"
+      ? (newEl = {
+          title: titleRef.current.value,
+          position: getPosition,
+          list_id: listId,
+        })
+      : (newEl = {
+          title: titleRef.current.value,
+          position: getPosition,
+        });
+
+    const response = await fetch(`http://localhost:5000/${element}s`, {
       method: "POST",
       body: JSON.stringify(newEl),
       headers: {
         "Content-Type": "application/json",
       },
     });
+
     const data = await response.json();
-    onAddedEl(data);
+    onAddedEl();
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-1/3 bg-indigo-800 w-5/12 mx-auto rounded fixed top-40 left-0 right-0 rounded-xl shadow-3xl py-10 ">
+    <div className="flex flex-col items-center justify-center min-h-1/3 bg-indigo-800 w-5/12 mx-auto rounded fixed top-40 left-0 right-0 rounded-xl shadow-3xl py-10 z-10 ">
       <h3 className="text-2xl font-bold text-center text-neutral-100 mb-8 relative">
         Add a new {element}
       </h3>

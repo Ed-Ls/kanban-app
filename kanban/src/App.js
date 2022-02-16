@@ -1,7 +1,7 @@
 import "./App.css";
 import { useEffect, useState, Fragment } from "react";
 import List from "./components/List";
-import { PlusCircleIcon, XCircleIcon } from "@heroicons/react/outline";
+import { PlusCircleIcon } from "@heroicons/react/outline";
 import ModalForm from "./components/ModalForm";
 
 function App() {
@@ -42,20 +42,31 @@ function App() {
     console.log(lists);
   }, []);
 
-  const handleNewList = async (newEl) => {
+  const handleNewEl = async () => {
     fetchLists();
     setShowModal(false);
+  };
+
+  const handleDeleteList = async () => {
+    fetchLists();
   };
 
   const handleAddList = () => {
     setShowModal(true);
   };
 
-  const kanban = lists.map((list) => (
+  let numOfLists = 1;
+
+  const kanban = lists.map((list, index) => (
     <List
       key={list.id}
+      id={list.id}
+      position={list.position}
       title={list.title}
       cards={list.cards.map((card) => card)}
+      onDeleteEl={handleDeleteList}
+      newEl={handleNewEl}
+      getData={fetchLists}
     />
   ));
 
@@ -63,7 +74,8 @@ function App() {
     <ModalForm
       element={"list"}
       modal={setShowModal}
-      onAddedEl={handleNewList}
+      onAddedEl={handleNewEl}
+      numOfEl={kanban.length}
     />
   );
 
@@ -75,7 +87,6 @@ function App() {
       </h1>
       <main className="flex flex-row h-[35rem] mx-2xl my-5 mx-2 bg-indigo-100 columns-3 gap-5 rounded-xl 5 p-2 overflow-scroll">
         {kanban}
-
         <div
           className="basis-1/4 flex-none m-5 bg-indigo-200 rounded-xl p-4 shadow-md h-[5rem] flex justify-center items-center cursor-pointer"
           onClick={handleAddList}

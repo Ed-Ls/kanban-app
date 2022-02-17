@@ -1,20 +1,25 @@
 import React from "react";
 
-function Label({ labelTitle, labelColor, labelId, getData }) {
+function Label({ labelTitle, labelColor, labelId, getData, cardId }) {
   const handleDeleteLabel = async (e) => {
     e.preventDefault();
 
-    const id = +e.currentTarget.id;
+    if (e.detail === 2) {
+      const id = +e.currentTarget.id;
 
-    const response = await fetch(`http://localhost:5000/labels/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await response.json();
+      const response = await fetch(
+        `http://localhost:5000/cards/${cardId}/label/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const data = await response.json();
 
-    getData();
+      getData();
+    }
   };
 
   const colorClass =

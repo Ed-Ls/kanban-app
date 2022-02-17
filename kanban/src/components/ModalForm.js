@@ -103,8 +103,11 @@ function ModalForm({
   const listLabels =
     labels &&
     labels.map((label) => (
-      <div key={label.id}>
-        <label className="inline-flex items-center" htmlFor="label">
+      <div
+        key={label.id}
+        className="flex flex-col items-center justify-around h-[4rem]"
+      >
+        <label htmlFor="label">
           <Label
             key={label.id}
             labelTitle={label.title}

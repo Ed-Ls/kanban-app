@@ -13,7 +13,7 @@ function Card({ title, id, labels, onDeleteEl, position, getData }) {
       labelId={label.id}
       labelTitle={label.title}
       labelColor={label.color}
-      cardId={label.card_id}
+      cardId={id}
       getData={getData}
     />
   ));

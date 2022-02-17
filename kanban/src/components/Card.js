@@ -1,12 +1,21 @@
-import React from "react";
+import React, { Fragment, useState } from "react";
 import Label from "./Label";
-import { TrashIcon } from "@heroicons/react/outline";
+import { PlusCircleIcon, TrashIcon } from "@heroicons/react/outline";
+import ModalForm from "./ModalForm";
 
-function Card({ title, id, color, labels, onDeleteEl, position }) {
-  // console.log(labels);
+function Card({ title, id, labels, onDeleteEl, position, getData }) {
+  const [showModal, setShowModal] = useState(false);
+  const [cardId, setCardId] = useState(0);
 
   const listLabels = labels.map((label) => (
-    <Label key={label.id} labelTitle={label.title} labelColor={label.color} />
+    <Label
+      key={label.id}
+      labelId={label.id}
+      labelTitle={label.title}
+      labelColor={label.color}
+      cardId={label.card_id}
+      getData={getData}
+    />
   ));
 
   //Delete a card on click
@@ -26,18 +35,51 @@ function Card({ title, id, color, labels, onDeleteEl, position }) {
     onDeleteEl();
   };
 
+  //Handle Modal & render new Label
+  const handleAddLabel = (e) => {
+    e.preventDefault();
+
+    setCardId(+e.currentTarget.id);
+
+    setShowModal(true);
+  };
+
+  const handleModal = () => {
+    setShowModal(false);
+    getData();
+  };
+
+  const modalLabel = (
+    <ModalForm
+      element={"label"}
+      modal={setShowModal}
+      onAddedEl={handleModal}
+      cardId={id}
+      numOfLabels={listLabels.length}
+    />
+  );
+
   return (
-    <div
-      className={`basis-1/4 m-3 bg-neutral-200 rounded-xl p-2 shadow-md shadow-indigo-400/50 py-6 my-6 relative order-${position}`}
-    >
-      <TrashIcon
-        className="cursor-pointer text-rose-900 w-6 absolute top-6 right-6"
-        onClick={handleDeleteCard}
-        id={id}
-      />
-      <h2 className="text-l font-bold mx-2 mb-5 text-left">{title}</h2>
-      {listLabels}
-    </div>
+    <Fragment>
+      {showModal && modalLabel}
+      <div
+        className={`basis-1/4 m-3 bg-neutral-200 rounded-xl p-2 shadow-md shadow-indigo-400/50 py-6 my-6 relative order-${position}`}
+      >
+        <TrashIcon
+          className="cursor-pointer text-rose-900 w-6 absolute top-6 right-6"
+          onClick={handleDeleteCard}
+          id={id}
+        />
+        <h2 className="text-l font-bold mx-2 mb-5 text-left">{title}</h2>
+        <div className="flex flex-wrap">
+          {listLabels}
+          <PlusCircleIcon
+            className="text-black-900 w-6 mx-3 cursor-pointer"
+            onClick={handleAddLabel}
+          />
+        </div>
+      </div>
+    </Fragment>
   );
 }
 

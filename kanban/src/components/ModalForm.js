@@ -105,7 +105,7 @@ function ModalForm({
     labels.map((label) => (
       <div
         key={label.id}
-        className="flex flex-col items-center justify-around h-[4rem]"
+        className="flex flex-col items-center justify-around h-[5rem]"
       >
         <label htmlFor="label">
           <Label
@@ -119,7 +119,7 @@ function ModalForm({
         <input
           type="radio"
           name="label"
-          className="form-radio accent-indigo-700"
+          className="form-radio accent-stone-700"
           checked={checkRadio(label.id)}
           onChange={() => setChangeRadio(+label.id)}
           id={label.id}
@@ -169,10 +169,10 @@ function ModalForm({
       {/* specific form for labels */}
       {element === "label" && (
         <form className="flex flex-col" onSubmit={addLabelToCard}>
-          <div className="flex w-[20rem] justify-around">{listLabels}</div>
+          <div className="flex w-[22rem] justify-around">{listLabels}</div>
 
           <button
-            className="bg-neutral-100 mt-12 py-2 rounded-xl cursor-pointer font-bold"
+            className="bg-neutral-100 mt-10 py-2 rounded-xl cursor-pointer font-bold"
             type="submit"
           >
             Add {element}

@@ -2,10 +2,12 @@ import React, { Fragment, useState } from "react";
 import Card from "./Card";
 import { PlusCircleIcon, TrashIcon } from "@heroicons/react/outline";
 import ModalForm from "./ModalForm";
+import EditTitleInput from "./EditTitleInput";
 
 function List({ title, id, position, cards, onDeleteEl, getData }) {
   const [showModal, setShowModal] = useState(false);
   const [listId, setListId] = useState(0);
+  const [editTitle, setEditTitle] = useState(false);
 
   const listCards = cards.map((card) => (
     <Card
@@ -36,6 +38,33 @@ function List({ title, id, position, cards, onDeleteEl, getData }) {
     onDeleteEl();
   };
 
+  //Update when clicking on the title
+  const handleEditList = (e) => {
+    setEditTitle(true);
+  };
+
+  const handleNewTitle = async (e) => {
+    if (e.key === "Enter") {
+      let newTitle = e.currentTarget.value;
+      let currId = e.currentTarget.id;
+
+      console.log(currId);
+
+      const response = await fetch(`http://localhost:5000/lists/${currId}`, {
+        method: "PATCH",
+        body: JSON.stringify({ title: newTitle }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+
+      getData();
+
+      setEditTitle(false);
+    }
+  };
+
   //Handle Modal & render new Card
   const handleAddCard = (e) => {
     e.preventDefault();
@@ -61,6 +90,10 @@ function List({ title, id, position, cards, onDeleteEl, getData }) {
     />
   );
 
+  const editTitleInp = (
+    <EditTitleInput id={id} handleNewTitle={handleNewTitle} title={title} />
+  );
+
   return (
     <Fragment>
       {showModal && modalCard}
@@ -68,13 +101,20 @@ function List({ title, id, position, cards, onDeleteEl, getData }) {
         className={`basis-1/4 flex-none m-5 bg-indigo-700 rounded-xl p-4 shadow-md overflow-y-auto relative order-${position}`}
       >
         <TrashIcon
-          className="cursor-pointer text-rose-600 w-8 absolute top-6 right-6"
+          className="cursor-pointer text-rose-700 w-8 absolute top-6 right-6"
           onClick={handleDeleteList}
           id={id}
         />
-        <h2 className="text-xl font-bold m-4 text-left text-neutral-100">
-          {title}
-        </h2>
+        {editTitle && editTitleInp}
+        {!editTitle && (
+          <h2
+            className="text-xl font-bold m-4 text-left text-neutral-100"
+            onClick={handleEditList}
+            id={id}
+          >
+            {title}
+          </h2>
+        )}
         {listCards}
 
         <div

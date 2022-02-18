@@ -1,20 +1,13 @@
 # MLD
 
-## Modèle logique des données
-
-- On reprend les entités du MCD et leurs attributs
-- On traduit les relations en ajoutant les clés (on pourra mettre un # pour bien identifier les clés étrangères)
-
-Mon MLD pour oKanban
+## MLD
 
 - list (id, title, position, created_at, updated_at)
 - card (id, title, color, position, #list_id, created_at, updated_at)
 - label (id, title, color, created_at, updated_at)
 - card_has_label (#card_id, #label_id, created_at)
 
-## MPD - Modèle physique des données
-
-C'est le MLD avec les types et les contraintes en plus, c'est exactement ce qu'on va implémenter dans notre BDD
+## MPD
 
 - list
   - id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY

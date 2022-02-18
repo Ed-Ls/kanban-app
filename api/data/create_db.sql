@@ -67,21 +67,22 @@ INSERT INTO "list" ("title", "position") -- on peut lister uniquement les champs
 
 INSERT INTO "card" ("title", "color", "position", "list_id")
     VALUES
-        ('Un 3ème écran', 'red', 0, 2),
-        ('Des lego', 'blue', 1, 2),
-        ('Voir exposition Pompidou', 'red', 0, 1);
+        ('A new monitor ', 'red', 0, 1),
+        ('x2 Mugs', 'blue', 1, 1),
+        ('Exhibition at Pompidou', 'blue', 0, 2);
 
 INSERT INTO "label" ("title", "color")
     VALUES
-        ('Urgent', 'red'),
-        ('Idée', 'yellow'),
-        ('À surveiller', 'green');
+        ('Important', 'red'),
+        ('Pending', 'yellow'),
+        ('Done', 'green'),
+        ('Idea', 'blue');
 
 INSERT INTO "card_has_label" ("card_id", "label_id")
     VALUES
         (1, 1),
-        (2, 2),
-        (3, 1),
-        (3, 3);
+        (2, 3),
+        (3, 4),
+        (3, 2);
 
 COMMIT;

@@ -3,6 +3,7 @@ import { useEffect, useState, Fragment } from "react";
 import List from "./components/List";
 import { PlusCircleIcon } from "@heroicons/react/outline";
 import ModalForm from "./components/ModalForm";
+import Header from "./components/Header";
 
 function App() {
   const [lists, setLists] = useState([]);
@@ -82,9 +83,7 @@ function App() {
   return (
     <Fragment>
       {showModal && modalList}
-      <h1 className="text-2xl font-bold text-center text-neutral-100 m-6">
-        Kanban App
-      </h1>
+      <Header />
       <main className="flex flex-row h-[35rem] mx-2xl my-5 mx-2 bg-indigo-100 columns-3 gap-5 rounded-xl 5 p-2 overflow-scroll">
         {kanban}
         <div
@@ -93,7 +92,7 @@ function App() {
         >
           <PlusCircleIcon className="text-indigo-900/75 w-10" />
           <p className="font-bold text-indigo-900/75 text-center mx-8 text-xl">
-            Ajouter une liste
+            Add a New List
           </p>
         </div>
       </main>

@@ -146,8 +146,7 @@ const cardController = {
             if (!label) {
                 return res.status(404).json('Label non trouvé');
             }
-            // on ajoute le label à la carte grâce à sequelize, voir
-            // https://sequelize.org/master/manual/assocs.html#-code-foo-belongstomany-bar----through--baz-----code-
+            // on ajoute le label à la carte 
             await card.addLabel(label);
             // on doit recharger le carte si on veut voir la modification dans notre réponse
             await card.reload();

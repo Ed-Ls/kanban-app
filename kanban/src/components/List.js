@@ -44,7 +44,7 @@ function List({ title, id, position, cards, onDeleteEl, getData }) {
   };
 
   const handleNewTitle = async (e) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" || e.type === "click") {
       let newTitle = e.currentTarget.value;
       let currId = e.currentTarget.id;
 
@@ -64,6 +64,10 @@ function List({ title, id, position, cards, onDeleteEl, getData }) {
       setEditTitle(false);
     }
   };
+
+  const editTitleInp = (
+    <EditTitleInput id={id} handleNewTitle={handleNewTitle} title={title} />
+  );
 
   //Handle Modal & render new Card
   const handleAddCard = (e) => {
@@ -90,15 +94,11 @@ function List({ title, id, position, cards, onDeleteEl, getData }) {
     />
   );
 
-  const editTitleInp = (
-    <EditTitleInput id={id} handleNewTitle={handleNewTitle} title={title} />
-  );
-
   return (
     <Fragment>
       {showModal && modalCard}
       <div
-        className={`basis-1/4 flex-none m-5 bg-indigo-700 rounded-xl p-4 shadow-md overflow-y-auto relative order-${position}`}
+        className={`basis-1/4 flex-none m-5 bg-indigo-700 rounded-xl p-4 py-6 shadow-md overflow-y-auto relative order-${position}`}
       >
         <TrashIcon
           className="cursor-pointer text-rose-700 w-8 absolute top-6 right-6"
@@ -108,7 +108,7 @@ function List({ title, id, position, cards, onDeleteEl, getData }) {
         {editTitle && editTitleInp}
         {!editTitle && (
           <h2
-            className="text-xl font-bold m-4 text-left text-neutral-100"
+            className="text-xl font-bold mb-4 ml-4 text-left text-neutral-100"
             onClick={handleEditList}
             id={id}
           >
@@ -124,7 +124,7 @@ function List({ title, id, position, cards, onDeleteEl, getData }) {
         >
           <PlusCircleIcon className="text-indigo-900 w-8" />
           <p className="text-indigo-900 text-center mx-8 text-xl">
-            Ajouter une carte
+            Add a New Card
           </p>
         </div>
       </div>

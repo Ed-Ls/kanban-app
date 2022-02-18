@@ -2,10 +2,12 @@ import React, { Fragment, useState } from "react";
 import Label from "./Label";
 import { PlusCircleIcon, TrashIcon } from "@heroicons/react/outline";
 import ModalForm from "./ModalForm";
+import EditTitleInput from "./EditTitleInput";
 
 function Card({ title, id, labels, onDeleteEl, position, getData }) {
   const [showModal, setShowModal] = useState(false);
   const [cardId, setCardId] = useState(0);
+  const [editTitle, setEditTitle] = useState(false);
 
   const listLabels = labels.map((label) => (
     <Label
@@ -34,6 +36,35 @@ function Card({ title, id, labels, onDeleteEl, position, getData }) {
 
     onDeleteEl();
   };
+
+  //Update when clicking on the title
+  const handleEditCard = (e) => {
+    setEditTitle(true);
+  };
+
+  const handleNewTitle = async (e) => {
+    if (e.key === "Enter" || e.type === "click") {
+      let newTitle = e.currentTarget.value;
+      let currId = +e.currentTarget.id;
+
+      const response = await fetch(`http://localhost:5000/cards/${currId}`, {
+        method: "PATCH",
+        body: JSON.stringify({ title: newTitle }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+
+      getData();
+
+      setEditTitle(false);
+    }
+  };
+
+  const editTitleInp = (
+    <EditTitleInput id={id} handleNewTitle={handleNewTitle} title={title} />
+  );
 
   //Handle Modal & render new Label
   const handleAddLabel = (e) => {
@@ -70,7 +101,16 @@ function Card({ title, id, labels, onDeleteEl, position, getData }) {
           onClick={handleDeleteCard}
           id={id}
         />
-        <h2 className="text-l font-bold mx-2 mb-5 text-left">{title}</h2>
+        {editTitle && editTitleInp}
+        {!editTitle && (
+          <h2
+            className="text-l font-bold mx-2 mb-5 text-left"
+            onClick={handleEditCard}
+            id={id}
+          >
+            {title}
+          </h2>
+        )}
         <div className="flex flex-wrap">
           {listLabels}
           <PlusCircleIcon

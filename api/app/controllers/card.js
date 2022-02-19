@@ -4,14 +4,12 @@ const cardController = {
     // lire toutes les cartes
     list: async (req, res) => {
         try {
-            // récupèrer les cartes
             const cards = await Card.findAll({
                 include: 'labels',
                 order : [
                     ['position', 'ASC'],
                 ],
             });
-            // envoyer une réponse
             res.json(cards);
         } catch(error) {
             console.trace(error);
@@ -24,20 +22,18 @@ const cardController = {
         try {
             // gérer les champs obligatoire
             if (!req.body.title) {
-                // pour tomber dans le catch, on peut jeter une erreur
                 throw new Error('title obligatoire');
             }
             if (!req.body.list_id) {
                 throw new Error('list_id obligatoire');
             }
-            // créer la carte
+
             const newCard = await Card.create({
                 title: req.body.title,
                 color: req.body.color,
                 position: req.body.position,
                 list_id: req.body.list_id,
             });
-            // envoyer une réponse
             res.json(newCard);
         } catch(error) {
             console.trace(error);
@@ -47,20 +43,16 @@ const cardController = {
     // lire une carte
     read: async (req, res) => {
         try {
-            // récupérer l'id demandé
             const id = req.params.id;
-            // trouver la carte
             const card = await Card.findByPk(id, {
                 include: 'labels',
                 order: [
                     ['position', 'ASC']
                 ],
             });
-            // si tout va bien on donne la carte
             if(card) {
                 res.json(card);
             }
-            // sinon on donne une erreur
             else {
                 res.status(404).json(`Aucune carte à l'id ${id}`);
             }
@@ -72,14 +64,10 @@ const cardController = {
     // mettre à jour une carte
     update: async (req, res) => {
         try {
-            // récupérer l'id demandé
             const id = req.params.id;
-            // trouver la carte
             const card = await Card.findByPk(id);
-            // si tout va bien on modifie
             if(card) {
                 // mettre à jour la carte avec les infos passées
-                // si on nous a renseigné un champ, on le modifie
                 if (req.body.title) {
                     card.title = req.body.title;
                 }
@@ -92,12 +80,11 @@ const cardController = {
                 if (req.body.list_id) {
                     card.list_id = req.body.list_id;
                 }
-                // sauvegarder en bdd
+
                 const cardSaved = await card.save();
-                // envoyer une réponse
+
                 res.json(cardSaved);
             }
-            // sinon on donne une erreur
             else {
                 res.status(404).json(`Aucune carte à l'id ${id}`);
             }
@@ -109,17 +96,14 @@ const cardController = {
     // supprimer une carte
     delete: async (req, res) => {
         try {
-            // récupérer l'id demandé
+
             const id = req.params.id;
-            // trouver la carte
             const card = await Card.findByPk(id);
-            // si on trouve
+
             if(card) {
-                // on supprime
                 await card.destroy();
                 res.json('Carte supprimée');
             }
-            // sinon on donne une erreur
             else {
                 res.status(404).json(`Aucune carte à l'id ${id}`);
             }
@@ -131,9 +115,9 @@ const cardController = {
     // association de label
     addLabelToCard: async (req, res) => {
         try {
-            // récupération des id
             const cardId = req.params.card_id;
             const labelId = req.params.label_id;
+
             // on récupère la carte
             const card = await Card.findByPk(cardId, {
                 include: 'labels'
@@ -141,16 +125,17 @@ const cardController = {
             if (!card) {
                 return res.status(404).json('Carte non trouvée');
             }
+
             // on récupère le label
             const label = await Label.findByPk(labelId);
             if (!label) {
                 return res.status(404).json('Label non trouvé');
             }
-            // on ajoute le label à la carte 
             await card.addLabel(label);
+
             // on doit recharger le carte si on veut voir la modification dans notre réponse
             await card.reload();
-            // on envoit la réponse
+
             res.json(card);
         } catch (error) {
             console.trace(error);
@@ -160,9 +145,9 @@ const cardController = {
     // dissociation de label
     removeLabelFromCard: async (req, res) => {
         try {
-            // récupération des id
             const cardId = req.params.card_id;
             const labelId = req.params.label_id;
+
             // on récupère la carte
             const card = await Card.findByPk(cardId, {
                 include: 'labels'
@@ -170,16 +155,17 @@ const cardController = {
             if (!card) {
                 return res.status(404).json('Carte non trouvée');
             }
+
             // on récupère le label
             const label = await Label.findByPk(labelId);
             if (!label) {
                 return res.status(404).json('Label non trouvé');
             }
-            // on retire le label à la carte grâce à sequelize
             await card.removeLabel(label);
+
             // on doit recharger le carte si on veut voir la modification dans notre réponse
             await card.reload();
-            // on envoit la réponse
+
             res.json(card);
         } catch (error) {
             console.trace(error);
@@ -193,12 +179,9 @@ const cardController = {
             if (req.params.id) {
               card = await Card.findByPk(req.params.id);
             }
-            // si on connait cette carte
             if (card) {
-                // on met à jour
                 await cardController.update(req, res);
             } else {
-                // sinon on crée
                 await cardController.create(req, res);
             }
         } catch (error) {

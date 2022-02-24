@@ -4,6 +4,8 @@
 
 It's a minimalist Trello-like app, allowing user to add different Lists with Cards and labels. You can edit lists & cards titles, delete cards & lists and freely add or remove labels from the cards.
 
+[Live Demo](https://www.youtube.com/watch?v=HrgwehyqHRk)
+
 ## How to run it
 
 Install node modules on API side :

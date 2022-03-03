@@ -4,7 +4,7 @@
 
 It's a minimalist Trello-like app, allowing user to add different Lists with Cards and labels. You can edit lists & cards titles, delete cards & lists and freely add or remove labels from the cards.
 
-[Live Demo](https://www.youtube.com/watch?v=HrgwehyqHRk)
+[Live Demo](https://youtu.be/7weil4R94YU)
 
 ## How to run it
 
